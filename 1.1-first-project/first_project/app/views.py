@@ -27,7 +27,8 @@ def time_view(request):
 def workdir_view(request):
     try:
         template_name = 'app/workdir.html'
-        list_of_files = os.listdir(os.getcwd())
+        path = "first_project"
+        list_of_files = os.listdir(os.path.join(os.getcwd(), path))
         context = {'list_of_files': list_of_files}
         return render(request, template_name, context)
     except Exception:
