@@ -19,7 +19,7 @@ def home_view(request):
 
 
 def time_view(request):
-    current_time = '{} часов {} минут'.format(datetime.now().hour, datetime.now().minute)
+    current_time = '{} часов {} минут'.format(datetime.now().hour + 4, datetime.now().minute)
     msg = f'Текущее время: {current_time}'
     return HttpResponse(msg)
 
