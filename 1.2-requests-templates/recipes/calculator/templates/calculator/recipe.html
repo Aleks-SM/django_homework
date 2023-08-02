@@ -8,8 +8,6 @@
 
 {% for key in recipe %}
     <h3>Рецепт приготовления блюда: {{ key }}</h3>
-    <p>{{ recipe.keys }}</p>
-    <p>{{ recipe.values }}</p>
     {% for ingredient, amount in recipe.items %}
         <p>{{ ingredient }}: {{ amount }}</p>
     {% empty %}
