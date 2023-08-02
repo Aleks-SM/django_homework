@@ -47,5 +47,16 @@ def recipe_omlet(request):
 
 def recipe(request, recipe):
     template_name = 'calculator/recipe.html'
-    context = {"recipe": DATA.get(recipe)}
-    return render(request, template_name, context)
+    try:
+        query = DATA.get(recipe)
+        context = {recipe: query}
+        # print('context=', context)
+        print('query=', query)
+
+        # for recipe, ingr in context.items():
+        #     for product, gr in ingr.items():
+        #         ingr[product] = gr
+        #     context = {recipe: ingr}
+    except KeyError:
+        context = {}
+    return render(request, template_name, {'recipe': query})
