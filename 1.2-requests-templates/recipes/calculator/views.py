@@ -42,21 +42,17 @@ def home_view(request):
 def recipe_omlet(request):
     template_name = 'calculator/recipe.html'
     context = {"recipe": DATA.get("omlet")}
-    print(context)
     return render(request, template_name, context)
 
 def recipe(request, recipe):
     template_name = 'calculator/recipe.html'
-    try:
-        query = DATA.get(recipe)
-        context = {recipe: query}
-        # print('context=', context)
-        print('query=', query)
-
-        # for recipe, ingr in context.items():
-        #     for product, gr in ingr.items():
-        #         ingr[product] = gr
-        #     context = {recipe: ingr}
-    except KeyError:
+    servings = int(request.GET.get('servings', 1))
+    if DATA.get(recipe):
+        context = {recipe: DATA.get(recipe)}
+        for recipe, ingr in context.items():
+            for product, gr in ingr.items():
+                ingr[product] = float(gr) * servings
+            context = {recipe: ingr}
+    else:
         context = {}
-    return render(request, template_name, {'recipe': query})
+    return render(request, template_name, {'recipe': context})
