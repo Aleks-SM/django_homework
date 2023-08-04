@@ -34,24 +34,17 @@ DATA = {
 def home_view(request):
     template_name = 'calculator/index.html'
     recipes = DATA.keys()
-    # for recipe in recipes():
-    #     print(recipe)
     context = {"recipes": recipes}
     return render(request, template_name, context)
 
-def recipe_omlet(request):
-    template_name = 'calculator/recipe.html'
-    context = {"recipe": DATA.get("omlet")}
-    return render(request, template_name, context)
 
 def recipe(request, recipe):
     template_name = 'calculator/recipe.html'
     servings = int(request.GET.get('servings', 1))
     if DATA.get(recipe):
         context = {recipe: DATA.get(recipe)}
-        for recipe, ingr in context.items():
-            for product, gr in ingr.items():
-                ingr[product] = float(gr) * servings
+        for recipe, ingridient in context.items():
+            ingr = {product: round(float(gr) * servings, 2) for product, gr in ingridient.items()}
             context = {recipe: ingr}
     else:
         context = {}
