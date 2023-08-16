@@ -9,8 +9,8 @@ def show_catalog(request):
     template = 'catalog.html'
     sort_param = {
         'name': 'name',
-        'min_price': 'min_price',
-        'max_price': 'max_price'
+        'min_price': 'price',
+        'max_price': '-price'
     }[request.GET.get('sort', 'name')]
 
     phones = Phone.objects.all().order_by(sort_param)
