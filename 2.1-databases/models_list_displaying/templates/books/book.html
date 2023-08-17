@@ -15,8 +15,8 @@
                 <p>Дата публикации: {{ book.pub_date| date:'Y-m-d' }}</p>
              </div>
         </div>
-                    <a class="button button-primary" href="/books/{{ pub_dates_prev| date:'Y-m-d' }}">< {{ pub_dates_prev| date:'Y-m-d' }}</a>
-                    <p></p>
-                    <a class="button button-primary" href="/books/{{ pub_dates_next| date:'Y-m-d' }}">{{ pub_dates_next| date:'Y-m-d' }} ></a>
+                    <a class="button button-primary" href="/books/{{ pub_dates_prev| date:'Y-m-d' }}"><< {{ pub_dates_prev| date:'Y-m-d' }}</a>
+                    <a></a>
+                    <a class="button button-primary" href="/books/{{ pub_dates_next| date:'Y-m-d' }}">{{ pub_dates_next| date:'Y-m-d' }} >></a>
                {% endfor %}
 {% endblock %}
