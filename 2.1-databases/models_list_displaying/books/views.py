@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from books.models import Book
-from django.urls import reverse
-from django.core.paginator import Paginator
+
 
 def books_view(request):
     template = 'books/books_list.html'
@@ -9,12 +8,18 @@ def books_view(request):
     context = {'books': books}
     return render(request, template, context)
 
-def book_view(request):
+def book_view(request, pub_date):
     template = 'books/book.html'
-    books = {'name': Book.objects.values().filter(pub_date='2018-02-27')[0].get('name')}
+    try:
+        pub_dates_prev = Book.objects.values().filter(pub_date__lt=pub_date)[0].get('pub_date')
+        pub_dates_next = Book.objects.values().filter(pub_date__gt=pub_date)[0].get('pub_date')
+    except IndexError:
+        pub_dates_next = Book.objects.values().first().get('pub_date')
+        pub_dates_prev = Book.objects.values().last().get('pub_date')
 
-    paginator = Paginator(books, 5)
-    page_number = int(request.GET.get('page'), 1)
-    page = paginator.get_page(page_number)
-    context = {'book': page}
+    context = {'books': Book.objects.filter(pub_date=pub_date),
+               'pub_dates_prev': pub_dates_prev,
+               'pub_dates_next': pub_dates_next,
+               }
+    print(context)
     return render(request, template, context)
