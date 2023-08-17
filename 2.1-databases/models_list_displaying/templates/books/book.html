@@ -8,13 +8,15 @@
             <h1><a href="/books">Каталог</a></h1>
         </div>
         <div class="row">
-            {% for book in books %}
             <div class="book col-md-4">
+                {% for book in books %}
                 <h2>{{ book.name }}</h2>
                 <p>Автор: {{ book.author }}</p>
                 <p>Дата публикации: {{ book.pub_date| date:'Y-m-d' }}</p>
-            </div>
-            {% endfor %}
+             </div>
         </div>
-    </div>
+                    <a class="button button-primary" href="/books/{{ pub_dates_prev| date:'Y-m-d' }}">< {{ pub_dates_prev| date:'Y-m-d' }}</a>
+                    <p></p>
+                    <a class="button button-primary" href="/books/{{ pub_dates_next| date:'Y-m-d' }}">{{ pub_dates_next| date:'Y-m-d' }} ></a>
+               {% endfor %}
 {% endblock %}
