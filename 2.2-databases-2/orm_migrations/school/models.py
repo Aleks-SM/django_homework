@@ -25,8 +25,3 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
-
-class StudentTeacher(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='position')
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='position')
-
