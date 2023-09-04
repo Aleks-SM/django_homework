@@ -4,15 +4,19 @@ from django.forms import BaseInlineFormSet
 
 from .models import Article, Tag, Scope
 
+
 class ScopeInlineFormset(BaseInlineFormSet):
     def clean(self):
-        count_true = 0
+        count = 0
         for form in self.forms:
-            flag = form.cleaned_data.get('is_main')
-            count_true += 1 if flag else 0
+            flag = form.cleaned_data.get("-is_main")
+            print(flag)
+            if flag:
+                count += 1
+            print("count=", count)
 
-        if count_true > 1:
-            raise ValidationError('Основным тегом может быть только один раздел!')
+        if count > 1:
+            raise ValidationError("Основным тегом может быть только один раздел!")
         return super().clean()
 
 
@@ -25,6 +29,7 @@ class ScopeInline(admin.TabularInline):
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [ScopeInline]
 
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ["name"]
