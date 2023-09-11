@@ -9,7 +9,7 @@ class ScopeInlineFormset(BaseInlineFormSet):
     def clean(self):
         count = 0
         for form in self.forms:
-            flag = form.cleaned_data.get("-is_main")
+            flag = form.cleaned_data.get("is_main")
             print(flag)
             if flag:
                 count += 1
