@@ -10,10 +10,8 @@ class ScopeInlineFormset(BaseInlineFormSet):
         count = 0
         for form in self.forms:
             flag = form.cleaned_data.get("is_main")
-            print(flag)
             if flag:
                 count += 1
-            print("count=", count)
 
         if count > 1:
             raise ValidationError("Основным тегом может быть только один раздел!")
