@@ -33,7 +33,10 @@ class StockSerializer(serializers.ModelSerializer):
         # с помощью списка positions
         for position in positions:
             StockProduct.objects.create(
-                stock=stock, product=product, quantity=quantity, price=price
+                stock=stock,
+                product=position["product"],
+                quantity=position["quantity"],
+                price=position["price"],
             )
         return stock
 
@@ -50,7 +53,10 @@ class StockSerializer(serializers.ModelSerializer):
         for position in positions:
             StockProduct.objects.update_or_create(
                 stock=stock,
-                product=product,
-                defaults={"price": price, "quantity": quantity},
+                product=position["product"],
+                defaults={
+                    "price": position["price"],
+                    "quantity": position["quantity"],
+                },
             )
         return stock
