@@ -49,3 +49,6 @@ class StockProduct(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)],
     )
+
+    def __str__(self):
+        return self.product.title
