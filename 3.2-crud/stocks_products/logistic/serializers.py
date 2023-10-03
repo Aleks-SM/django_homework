@@ -10,14 +10,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ProductPositionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
-        fields = ["id", "title", "description"]
-
-
-class ProductStockSerializer(serializers.ModelSerializer):
-    class Meta:
         model = StockProduct
-        fields = ['product', 'quantity', 'price']
+        fields = ['id', 'quantity', 'price', 'product']
 
 
 class StockSerializer(serializers.ModelSerializer):
@@ -25,7 +19,7 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
-        fields = ["id", "address", "products"]
+        fields = ["id", "address", "positions"]
 
     def create(self, validated_data):
         # достаем связанные данные для других таблиц
@@ -40,7 +34,7 @@ class StockSerializer(serializers.ModelSerializer):
         for position in positions:
             StockProduct.objects.create(
                 stock=stock,
-                product=position["product"],
+                product=position["products"],
                 quantity=position["quantity"],
                 price=position["price"],
             )
@@ -59,7 +53,7 @@ class StockSerializer(serializers.ModelSerializer):
         for position in positions:
             StockProduct.objects.update_or_create(
                 stock=stock,
-                product=position["product"],
+                product=position["products"],
                 defaults={
                     "price": position["price"],
                     "quantity": position["quantity"],
